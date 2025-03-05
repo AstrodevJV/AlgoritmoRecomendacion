@@ -10,6 +10,10 @@
     padding: 24px 0px;
 }
 
+#bienvenida h1 {
+    color: blue;
+}
+
 /*
 Padding
 1 valor: Todos los lados.
