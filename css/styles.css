@@ -2,16 +2,32 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: rgb(236, 240, 240);
 }
 
 #bienvenida {
     width: 100%;
     text-align: center;
-    padding: 24px 0px;
+    margin: 128px auto;
 }
 
-#bienvenida h1 {
-    color: blue;
+#titulo {
+    color: rgb(59, 59, 59);
+}
+
+.boxContainer {
+    background-color: white;
+    text-align: center;
+}
+
+#box {
+    width: 80%;
+    margin: 24px auto;
+    padding: 24px;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /*
