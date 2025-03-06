@@ -46,7 +46,6 @@ const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoArte4.jpg', category: 'Arte' }
 
 ];
-
 document.addEventListener("DOMContentLoaded", () => {
     let seleccionCount = 0; // Contador de selecciones
 
@@ -100,6 +99,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 card.classList.add('selected');
             });
         });
+
+        // Verificar si es la décima ronda y guardar imágenes con sus categorías
+        let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0;
+        if (seleccionCount === 9) { // En la décima ronda
+            const imagenesRonda10 = selectedCards.map(img => ({
+                categoria: img.category,
+                url: img.src
+            }));
+
+            localStorage.setItem("imagenesRonda10", JSON.stringify(imagenesRonda10));
+            console.log("📸 Imágenes de la ronda 10 guardadas con categoría:", imagenesRonda10);
+        }
     }
 
     document.getElementById('confirmSelection').addEventListener('click', () => {
@@ -108,6 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selectedCard) {
             let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
             storedCategories.push(selectedCard.dataset.category);
+            if (seleccionCount === 10) {
+                storedCategories.pop();
+            }
             localStorage.setItem("selectedCategories", JSON.stringify(storedCategories));
 
             seleccionCount++;
@@ -128,9 +142,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
         const recomendacion = predecirGusto(storedCategories);
         console.log("🔥 Categoría recomendada:", recomendacion);
-        alert("🔥 Basado en tus elecciones, la categoría recomendada es: " + recomendacion);
 
-        // 🔹 Resetear el historial tras la recomendación 🔹
+
+        localStorage.setItem("categoriaRecomendada", recomendacion);
+
+
+        window.location.href = "prediccion.html";
+
+
         localStorage.removeItem("selectedCategories");
         seleccionCount = 0;
     }
