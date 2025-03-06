@@ -33,8 +33,7 @@ const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness3.jpg', category: 'Fitness' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness4.jpg', category: 'Fitness' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness5.jpg', category: 'Fitness' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness6.jpg', category: 'Fitness' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness7.jpg', category: 'Fitness' },
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness6.jpg', category: 'Fitness' },    
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness8.jpg', category: 'Fitness' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness9.jpg', category: 'Fitness' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoBienestar1.jpg', category: 'Bienestar' },
@@ -60,7 +59,7 @@ function displayCards() {
         card.dataset.category = imageObj.category;
 
         const img = document.createElement('img');
-        
+        // Evita el caché agregando un parámetro único a la URL
         img.src = imageObj.src + "?t=" + new Date().getTime();
         img.alt = 'Carta';
 
@@ -79,3 +78,4 @@ function displayCards() {
         });
     });
 }
+
