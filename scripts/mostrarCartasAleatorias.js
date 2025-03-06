@@ -80,7 +80,7 @@ function displayCards() {
         card.dataset.category = imageObj.category;
 
         const img = document.createElement('img');
-        img.src = imageObj.src;
+        img.src = imageObj.src + "?t=" + new Date().getTime(); // Evita el caché
         img.alt = 'Carta';
 
         const categoryLabel = document.createElement('p');
