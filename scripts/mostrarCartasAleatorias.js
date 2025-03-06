@@ -47,7 +47,7 @@ const images = [
     { src: 'images/fotoBienestar6.jpg', category: 'Bienestar' },
     { src: 'images/fotoBienestar7.jpg', category: 'Bienestar' },
     { src: 'images/fotoBienestar8.jpg', category: 'Bienestar' },
-    { src: 'images/fotoArte1.webp', category: 'Arte' },
+    { src: 'images/fotoArte1.webp', category: 'Arte -------' },
     { src: 'images/fotoArte2.jpg', category: 'Arte' },
     { src: 'images/fotoArte3.jpg', category: 'Arte' },
     { src: 'images/fotoArte4.jpg', category: 'Arte' },
