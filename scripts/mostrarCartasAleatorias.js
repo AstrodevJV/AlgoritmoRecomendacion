@@ -45,8 +45,10 @@ const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoArte3.jpg', category: 'Arte', name: 'Instrumentos' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoArte4.jpg', category: 'Arte', name: 'Arte' }
 ];
+
 document.addEventListener("DOMContentLoaded", () => {
     let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0; // Cargar el contador de selecciones
+    let usedCategories = JSON.parse(localStorage.getItem("usedCategories")) || []; // Categorías ya mostradas
 
     function getMostSelectedCategory() {
         const storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
@@ -69,11 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
             categoryMap[img.category].push(img);
         });
 
-        const uniqueCards = [];
-        const categories = Object.keys(categoryMap).sort(() => Math.random() - 0.5);
+        let availableCategories = Object.keys(categoryMap).filter(cat => !usedCategories.includes(cat));
+        availableCategories = availableCategories.sort(() => Math.random() - 0.5);
 
-        for (let i = 0; i < categories.length && uniqueCards.length < 4; i++) {
-            const categoryImages = categoryMap[categories[i]];
+        const uniqueCards = [];
+        for (let i = 0; i < availableCategories.length && uniqueCards.length < 4; i++) {
+            const categoryImages = categoryMap[availableCategories[i]];
             const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
             uniqueCards.push(randomImage);
         }
@@ -86,14 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let selectedCards = getUniqueCategoryCards();
         cardContainer.innerHTML = '';
 
-        if (seleccionCount === 9) { // Si es la décima ronda
+        if (seleccionCount === 9) { // En la décima ronda
             const mostSelectedCategory = getMostSelectedCategory();
             if (mostSelectedCategory) {
                 const categoryImages = images.filter(img => img.category === mostSelectedCategory);
                 if (categoryImages.length > 0) {
                     const guaranteedImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
-                    selectedCards = selectedCards.slice(0, 3); // Reducir a 3 cartas
-                    selectedCards.push(guaranteedImage); // Añadir la imagen asegurada
+                    selectedCards = selectedCards.slice(0, 3); // Reducimos a 3 cartas
+                    selectedCards.push(guaranteedImage); // Añadimos la imagen asegurada
                 }
             }
         }
@@ -121,7 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        if (seleccionCount === 9) { // Guardar imágenes de la ronda 10
+        usedCategories = selectedCards.map(img => img.category); // Actualizamos las categorías usadas
+        localStorage.setItem("usedCategories", JSON.stringify(usedCategories));
+
+        if (seleccionCount === 9) { // Guardamos imágenes de la ronda 10
             const imagenesRonda10 = selectedCards.map(img => ({
                 categoria: img.category,
                 url: img.src
@@ -162,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "prediccion.html";
 
         localStorage.removeItem("selectedCategories");
+        localStorage.removeItem("usedCategories");
         seleccionCount = 0;
     }
 
