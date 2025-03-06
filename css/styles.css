@@ -8,26 +8,60 @@
 #bienvenida {
     width: 100%;
     text-align: center;
-    margin: 128px auto;
+}
+
+#backImg {
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+    border-bottom-left-radius: 120px;
+    border-bottom-right-radius: 120px;
+}
+
+#imgPrincipal {
+    width: 40%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
 }
 
 #titulo {
     color: rgb(59, 59, 59);
+    margin: 64px 0px 12px;
 }
 
+/* Box */
 .boxContainer {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     text-align: center;
 }
 
 #box {
-    width: 80%;
+    width: 65%;
     margin: 24px auto;
     padding: 24px;
     display: block;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#inputClave {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    width: 100%;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 24px;
+    padding: 1px 12px;
+    outline: none;
+}
+
+#botonIniciar {
+    padding: 4px 8px;
+    border: 0px solid #ccc;
+    border-radius: 12px;
+    background: rgb(59, 59, 59);
+    color: white;
+    width: 50%;
 }
 
 /*
