@@ -1,5 +1,5 @@
 const images = [
-    /*{ src: 'images/fotoModa1.JPG', category: 'Moda' },
+    { src: 'images/fotoModa1.JPG', category: 'Moda' },
     { src: 'images/fotoModa2.JPG', category: 'Moda' },
     { src: 'images/fotoModa3.JPG', category: 'Moda' },
     { src: 'images/fotoModa3.JPG', category: 'Moda' },
@@ -46,8 +46,8 @@ const images = [
     { src: 'images/fotoBienestar5.jpg', category: 'Bienestar' },
     { src: 'images/fotoBienestar6.jpg', category: 'Bienestar' },
     { src: 'images/fotoBienestar7.jpg', category: 'Bienestar' },
-    { src: 'images/fotoBienestar8.jpg', category: 'Bienestar' },*/
-    { src: 'images/fotoArte1.webp', category: 'Arte -------' }/*,
+    { src: 'images/fotoBienestar8.jpg', category: 'Bienestar' },
+    { src: 'images/fotoArte1.jpg', category: 'Arte' },
     { src: 'images/fotoArte2.jpg', category: 'Arte' },
     { src: 'images/fotoArte3.jpg', category: 'Arte' },
     { src: 'images/fotoArte4.jpg', category: 'Arte' },
@@ -57,7 +57,7 @@ const images = [
     { src: 'images/fotoArte6.jpg', category: 'Arte' },
     { src: 'images/fotoArte8.jpg', category: 'Arte' },
     { src: 'images/fotoArte9.jpg', category: 'Arte' },
-    { src: 'images/fotoArte10.jpg', category: 'Arte' }*/
+    { src: 'images/fotoArte10.jpg', category: 'Arte' }
 ];
 
 function getUniqueCategoryCards() {
