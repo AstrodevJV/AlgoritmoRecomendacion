@@ -1,4 +1,4 @@
-let clave = "12345";
+let clave = "9741";
 let button = document.getElementById("initialbutton");
 
 button.addEventListener("click", function() {

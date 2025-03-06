@@ -1,0 +1,119 @@
+#content {
+    width: 100%;
+    text-align: center;
+}
+
+#logo {
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+    border-bottom-left-radius: 120px;
+    border-bottom-right-radius: 120px;
+}
+
+#logoImage {
+    width: 40%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+}
+
+#title {
+    color: rgb(59, 59, 59);
+    margin: 64px 32px 12px;
+}
+
+/* Box */
+.boxContainer {
+    background-color: rgb(255, 255, 255);
+}
+
+#box {
+    width: 70%;
+    margin: 24px auto;
+    padding: 24px;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#text {
+    background-color: rgb(255, 255, 255);
+    font-family: sans-serif;
+    text-align: left;
+}
+
+#inputCode {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 24px;
+    padding: 1px 12px;
+    outline: none;
+}
+
+#initialbutton {
+    padding: 4px 8px;
+    border: 0px solid #ccc;
+    border-radius: 12px;
+    background: rgb(59, 59, 59);
+    color: white;
+    width: 100%;
+    height: 30px;
+}
+
+@media (max-width: 300px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 330px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 800px) {
+    #logo {
+        background-color: rgb(255, 255, 255);
+        padding: 8px;
+        border-bottom-left-radius: 200px;
+        border-bottom-right-radius: 200px;
+        margin: 0px 128px;
+    }
+
+    #logoImage {
+        width: 30%;
+    }
+}
+
+@media (min-width: 1000px) {
+    #logo {
+        background-color: rgb(255, 255, 255);
+        padding: 8px;
+        border-bottom-left-radius: 300px;
+        border-bottom-right-radius: 300px;
+        margin: 0px 192px;
+    }
+
+    #logoImage {
+        width: 25%;
+    }
+}
+
+/*
+Padding
+1 valor: Todos los lados.
+2 valores: 1 para superior/inferior, 1 para izquierda/derecha.
+3 valores: 1 para superior, 2 para izquierda/derecha, 3 para inferior.
+4 valores: Superior, derecho, inferior, izquierdo.
+*/
