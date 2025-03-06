@@ -23,20 +23,13 @@ function predecirGusto(elecciones) {
     return mejoresCategorias[0]; // En caso de empate total, devolver la primera opción
 }
 
-// Recuperar selección del usuario
+// Recuperar todo el historial de elecciones del usuario
 const eleccionesUsuario = JSON.parse(localStorage.getItem("selectedCategories")) || [];
 
 if (eleccionesUsuario.length > 0) {
     const recomendacion = predecirGusto(eleccionesUsuario);
-    console.log("Categoría recomendada:", recomendacion);
+    console.log("Historial de elecciones:", eleccionesUsuario);
+    console.log("Categoría más escogida:", recomendacion);
 } else {
     console.log("No hay elecciones guardadas.");
 }
-
-const eleccionesUsuario = [
-    "Música", "Fitness", "Música", "Arte", "Moda",
-    "Música", "Bienestar", "Música", "Fitness", "Arte",
-    "Medios de comunicación", "Música", "Moda", "Fitness", "Música"
-];
-
-console.log(predecirGusto(eleccionesUsuario));

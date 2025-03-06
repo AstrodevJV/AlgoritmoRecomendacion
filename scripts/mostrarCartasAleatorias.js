@@ -47,68 +47,93 @@ const images = [
 
 ];
 
-function getUniqueCategoryCards() {
-    const categoryMap = {};
-    images.forEach(img => {
-        if (!categoryMap[img.category]) {
-            categoryMap[img.category] = [];
+document.addEventListener("DOMContentLoaded", () => {
+    let seleccionCount = 0; // Contador de selecciones
+
+    function getUniqueCategoryCards() {
+        const categoryMap = {};
+        images.forEach(img => {
+            if (!categoryMap[img.category]) {
+                categoryMap[img.category] = [];
+            }
+            categoryMap[img.category].push(img);
+        });
+
+        const uniqueCards = [];
+        const categories = Object.keys(categoryMap).sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < categories.length && uniqueCards.length < 4; i++) {
+            const categoryImages = categoryMap[categories[i]];
+            const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
+            uniqueCards.push(randomImage);
         }
-        categoryMap[img.category].push(img);
-    });
 
-    const uniqueCards = [];
-    const categories = Object.keys(categoryMap).sort(() => Math.random() - 0.5);
-
-    for (let i = 0; i < categories.length && uniqueCards.length < 4; i++) {
-        const categoryImages = categoryMap[categories[i]];
-        const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
-        uniqueCards.push(randomImage);
+        return uniqueCards;
     }
 
-    return uniqueCards;
-}
+    function displayCards() {
+        const cardContainer = document.getElementById('cardContainer');
+        const selectedCards = getUniqueCategoryCards();
+        cardContainer.innerHTML = '';
 
-function displayCards() {
-    const cardContainer = document.getElementById('cardContainer');
-    const selectedCards = getUniqueCategoryCards();
-    cardContainer.innerHTML = '';
+        selectedCards.forEach(imageObj => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.category = imageObj.category;
 
-    selectedCards.forEach(imageObj => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.selected = "false";
-        card.dataset.category = imageObj.category;
+            const img = document.createElement('img');
+            img.src = imageObj.src;
+            img.alt = 'Carta';
 
-        const img = document.createElement('img');
-        img.src = imageObj.src + "?t=" + new Date().getTime(); // Evita el caché
-        img.alt = 'Carta';
+            const categoryLabel = document.createElement('p');
+            categoryLabel.textContent = imageObj.category;
+            categoryLabel.classList.add('category-label');
 
-        const categoryLabel = document.createElement('p');
-        categoryLabel.textContent = imageObj.category;
-        categoryLabel.classList.add('category-label');
+            card.appendChild(img);
+            card.appendChild(categoryLabel);
+            cardContainer.appendChild(card);
 
-        card.appendChild(img);
-        card.appendChild(categoryLabel);
-        cardContainer.appendChild(card);
-
-        card.addEventListener('click', () => {
-            console.log("Categorías seleccionadas guardadas:", selectedCategories);
-            const isSelected = card.dataset.selected === "true";
-            card.dataset.selected = isSelected ? "false" : "true";
-            card.classList.toggle('selected', !isSelected);
+            card.addEventListener('click', () => {
+                // Quitar selección previa
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+                // Marcar nueva selección
+                card.classList.add('selected');
+            });
         });
+    }
+
+    document.getElementById('confirmSelection').addEventListener('click', () => {
+        const selectedCard = document.querySelector('.card.selected');
+
+        if (selectedCard) {
+            let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
+            storedCategories.push(selectedCard.dataset.category);
+            localStorage.setItem("selectedCategories", JSON.stringify(storedCategories));
+
+            seleccionCount++;
+            console.log(`Selección ${seleccionCount}:`, selectedCard.dataset.category);
+            console.log("Historial de categorías guardadas:", storedCategories);
+
+            if (seleccionCount >= 10) {
+                obtenerRecomendacion();
+            } else {
+                displayCards(); // Mostrar nuevas cartas
+            }
+        } else {
+            console.log("No se ha seleccionado ninguna categoría.");
+        }
     });
-}
 
-document.getElementById('confirmSelection').addEventListener('click', () => {
-    const selectedCards = document.querySelectorAll('.card[data-selected="true"]');
-    const selectedCategories = Array.from(selectedCards).map(card => card.dataset.category);
+    function obtenerRecomendacion() {
+        let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
+        const recomendacion = predecirGusto(storedCategories);
+        console.log("🔥 Categoría recomendada:", recomendacion);
+        alert("🔥 Basado en tus elecciones, la categoría recomendada es: " + recomendacion);
 
-    // se guarda creo
-    localStorage.setItem("selectedCategories", JSON.stringify(selectedCategories));
+        // 🔹 Resetear el historial tras la recomendación 🔹
+        localStorage.removeItem("selectedCategories");
+        seleccionCount = 0;
+    }
 
-    console.log("Categorías seleccionadas guardadas:", selectedCategories);
+    displayCards();
 });
-
-
-displayCards();
