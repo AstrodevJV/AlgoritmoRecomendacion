@@ -47,6 +47,27 @@ const images = [
 
 ];
 
+function getUniqueCategoryCards() {
+    const categoryMap = {};
+    images.forEach(img => {
+        if (!categoryMap[img.category]) {
+            categoryMap[img.category] = [];
+        }
+        categoryMap[img.category].push(img);
+    });
+
+    const uniqueCards = [];
+    const categories = Object.keys(categoryMap).sort(() => Math.random() - 0.5);
+
+    for (let i = 0; i < categories.length && uniqueCards.length < 4; i++) {
+        const categoryImages = categoryMap[categories[i]];
+        const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
+        uniqueCards.push(randomImage);
+    }
+
+    return uniqueCards;
+}
+
 function displayCards() {
     const cardContainer = document.getElementById('cardContainer');
     const selectedCards = getUniqueCategoryCards();
@@ -59,8 +80,7 @@ function displayCards() {
         card.dataset.category = imageObj.category;
 
         const img = document.createElement('img');
-        // Evita el caché agregando un parámetro único a la URL
-        img.src = imageObj.src + "?t=" + new Date().getTime();
+        img.src = imageObj.src + "?t=" + new Date().getTime(); // Evita el caché
         img.alt = 'Carta';
 
         const categoryLabel = document.createElement('p');
@@ -79,3 +99,11 @@ function displayCards() {
     });
 }
 
+document.getElementById('confirmSelection').addEventListener('click', () => {
+    const selectedCards = document.querySelectorAll('.card[data-selected="true"]');
+    const selectedCategories = new Set();
+    selectedCards.forEach(card => selectedCategories.add(card.dataset.category));
+    document.getElementById('selectedCategories').textContent = "Categorías seleccionadas: " + Array.from(selectedCategories).join(', ');
+});
+
+displayCards();
