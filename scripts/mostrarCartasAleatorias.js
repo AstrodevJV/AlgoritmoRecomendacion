@@ -1,8 +1,8 @@
 const images = [
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa1.JPG', category: 'Moda' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa2.JPG', category: 'Moda' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa3.JPG', category: 'Moda' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa3.JPG', category: 'Moda' },
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa1.jpg', category: 'Moda' },
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa2.jpg', category: 'Moda' },
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa3.jpg', category: 'Moda' },
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa3.jpg', category: 'Moda' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa4.jpg', category: 'Moda' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa5.jpg', category: 'Moda' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoModa6.jpg', category: 'Moda' },
