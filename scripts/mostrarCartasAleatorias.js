@@ -47,8 +47,7 @@ const images = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-    let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0; // Cargar el contador de selecciones
-    let usedCategories = JSON.parse(localStorage.getItem("usedCategories")) || []; // Categorías ya mostradas
+    let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0;
 
     function getMostSelectedCategory() {
         const storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
@@ -71,14 +70,31 @@ document.addEventListener("DOMContentLoaded", () => {
             categoryMap[img.category].push(img);
         });
 
-        let availableCategories = Object.keys(categoryMap).filter(cat => !usedCategories.includes(cat));
-        availableCategories = availableCategories.sort(() => Math.random() - 0.5);
+        let uniqueCards = [];
+        let usedCategories = new Set();
+        let categories = Object.keys(categoryMap).sort(() => Math.random() - 0.5);
 
-        const uniqueCards = [];
-        for (let i = 0; i < availableCategories.length && uniqueCards.length < 4; i++) {
-            const categoryImages = categoryMap[availableCategories[i]];
-            const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
-            uniqueCards.push(randomImage);
+        for (let i = 0; i < categories.length && uniqueCards.length < 4; i++) {
+            if (!usedCategories.has(categories[i])) {
+                const categoryImages = categoryMap[categories[i]];
+                const randomImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
+                uniqueCards.push(randomImage);
+                usedCategories.add(categories[i]);
+            }
+        }
+
+        // Si es la ronda 10, aseguramos que haya una imagen de la categoría más seleccionada
+        if (seleccionCount === 9) {
+            const mostSelectedCategory = getMostSelectedCategory();
+            if (mostSelectedCategory && !usedCategories.has(mostSelectedCategory)) {
+                const categoryImages = categoryMap[mostSelectedCategory];
+                if (categoryImages.length > 0) {
+                    const guaranteedImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
+                    uniqueCards.pop(); // Quitamos la última imagen para hacer espacio
+                    uniqueCards.push(guaranteedImage);
+                    usedCategories.add(mostSelectedCategory);
+                }
+            }
         }
 
         return uniqueCards;
@@ -86,20 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayCards() {
         const cardContainer = document.getElementById('cardContainer');
-        let selectedCards = getUniqueCategoryCards();
+        const selectedCards = getUniqueCategoryCards();
         cardContainer.innerHTML = '';
-
-        if (seleccionCount === 9) { // En la décima ronda
-            const mostSelectedCategory = getMostSelectedCategory();
-            if (mostSelectedCategory) {
-                const categoryImages = images.filter(img => img.category === mostSelectedCategory);
-                if (categoryImages.length > 0) {
-                    const guaranteedImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
-                    selectedCards = selectedCards.slice(0, 3); // Reducimos a 3 cartas
-                    selectedCards.push(guaranteedImage); // Añadimos la imagen asegurada
-                }
-            }
-        }
 
         selectedCards.forEach(imageObj => {
             const card = document.createElement('div');
@@ -124,16 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        usedCategories = selectedCards.map(img => img.category); // Actualizamos las categorías usadas
-        localStorage.setItem("usedCategories", JSON.stringify(usedCategories));
-
-        if (seleccionCount === 9) { // Guardamos imágenes de la ronda 10
+        if (seleccionCount === 9) {
             const imagenesRonda10 = selectedCards.map(img => ({
                 categoria: img.category,
                 url: img.src
             }));
             localStorage.setItem("imagenesRonda10", JSON.stringify(imagenesRonda10));
-            console.log("📸 Imágenes de la ronda 10 guardadas:", imagenesRonda10);
+            console.log("📸 Imágenes de la ronda 10 guardadas con categoría:", imagenesRonda10);
         }
     }
 
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (seleccionCount >= 10) {
                 obtenerRecomendacion();
             } else {
-                displayCards(); // Mostrar nuevas cartas
+                displayCards();
             }
         } else {
             console.log("No se ha seleccionado ninguna categoría.");
@@ -161,14 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function obtenerRecomendacion() {
         let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
-        const recomendacion = predecirGusto(storedCategories);
+        const recomendacion = getMostSelectedCategory();
         console.log("🔥 Categoría recomendada:", recomendacion);
 
         localStorage.setItem("categoriaRecomendada", recomendacion);
         window.location.href = "prediccion.html";
-
         localStorage.removeItem("selectedCategories");
-        localStorage.removeItem("usedCategories");
         seleccionCount = 0;
     }
 
