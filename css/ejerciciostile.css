@@ -92,6 +92,11 @@ h1 {
     color: #222;
 }
 
+#cc {
+    width: 100;
+    height: auto;
+    margin-bottom: 0px;
+}
 
 @media (max-width: 400px) {
     .card {

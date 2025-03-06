@@ -1,3 +1,6 @@
+let contador = 1;
+const h2Contador = document.getElementById("contador");
+
 const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoMODA1.jpg', category: 'Moda', name: 'Moda' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoMODA2.jpg', category: 'Moda', name: 'Moda contenporánea' },
@@ -33,7 +36,7 @@ const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness3.jpg', category: 'Fitness', name: 'Pesas' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness4.jpg', category: 'Fitness', name: 'Yoga' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness5.jpg', category: 'Fitness', name: 'Ejercicio' },
-    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness6.jpg', category: 'Fitness', name: 'Danza' },    
+    { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness6.jpg', category: 'Fitness', name: 'Danza' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness8.jpg', category: 'Fitness', name: 'Ejercicio' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoFitness9.jpg', category: 'Fitness', name: 'Fitness' },
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoBienestar1.jpg', category: 'Bienestar', name: 'Brain Training' },
@@ -106,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cardContainer.innerHTML = '';
 
         selectedCards.forEach(imageObj => {
+
             const card = document.createElement('div');
             card.classList.add('card');
             card.dataset.category = imageObj.category;
@@ -149,6 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
             seleccionCount++;
             console.log(`Selección ${seleccionCount}:`, selectedCard.dataset.category);
             console.log("Historial de categorías guardadas:", storedCategories);
+
+            contador++;
+            h2Contador.innerHTML = `${contador}/10`;
 
             if (seleccionCount >= 10) {
                 obtenerRecomendacion();
