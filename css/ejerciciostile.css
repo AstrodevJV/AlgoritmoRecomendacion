@@ -9,8 +9,12 @@ body {
 
 /* Título */
 h1 {
+<<<<<<< HEAD
     color: #222;
     margin-top: 20px;
+=======
+    color: rgb(59, 59, 59);
+>>>>>>> 28c9fe51a1a20f207f868138c814d5a4545e95de
 }
 
 /* Contenedor de cartas */
