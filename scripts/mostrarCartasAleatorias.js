@@ -101,9 +101,13 @@ function displayCards() {
 
 document.getElementById('confirmSelection').addEventListener('click', () => {
     const selectedCards = document.querySelectorAll('.card[data-selected="true"]');
-    const selectedCategories = new Set();
-    selectedCards.forEach(card => selectedCategories.add(card.dataset.category));
-    document.getElementById('selectedCategories').textContent = "Categorías seleccionadas: " + Array.from(selectedCategories).join(', ');
+    const selectedCategories = Array.from(selectedCards).map(card => card.dataset.category);
+
+    // se guarda creo
+    localStorage.setItem("selectedCategories", JSON.stringify(selectedCategories));
+
+    console.log("Categorías seleccionadas guardadas:", selectedCategories);
 });
+
 
 displayCards();

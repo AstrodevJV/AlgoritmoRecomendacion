@@ -2,10 +2,7 @@ const CATEGORIAS = ["Moda", "Medios de comunicación", "Música", "Fitness", "Bi
 
 function predecirGusto(elecciones) {
     let conteo = {};
-
-
     CATEGORIAS.forEach(categoria => conteo[categoria] = 0);
-
 
     elecciones.forEach(etiqueta => {
         if (CATEGORIAS.includes(etiqueta)) {
@@ -13,25 +10,33 @@ function predecirGusto(elecciones) {
         }
     });
 
-
     let max = Math.max(...Object.values(conteo));
     let mejoresCategorias = Object.keys(conteo).filter(categoria => conteo[categoria] === max);
 
-    // Si empatan, elegir la categoría más reciente en la lista de elecciones
+    // Si hay empate, tomar la categoría más reciente en la selección
     for (let i = elecciones.length - 1; i >= 0; i--) {
         if (mejoresCategorias.includes(elecciones[i])) {
             return elecciones[i];
         }
     }
 
-    return mejoresCategorias[0]; // Por si acaso
+    return mejoresCategorias[0]; // En caso de empate total, devolver la primera opción
 }
 
-// pruba por si lo quiere ver en el navegador
+// Recuperar selección del usuario
+const eleccionesUsuario = JSON.parse(localStorage.getItem("selectedCategories")) || [];
+
+if (eleccionesUsuario.length > 0) {
+    const recomendacion = predecirGusto(eleccionesUsuario);
+    console.log("Categoría recomendada:", recomendacion);
+} else {
+    console.log("No hay elecciones guardadas.");
+}
+
 const eleccionesUsuario = [
     "Música", "Fitness", "Música", "Arte", "Moda",
     "Música", "Bienestar", "Música", "Fitness", "Arte",
     "Medios de comunicación", "Música", "Moda", "Fitness", "Música"
 ];
 
-console.log("Categoría recomendada:", predecirGusto(eleccionesUsuario));
+console.log(predecirGusto(eleccionesUsuario));
