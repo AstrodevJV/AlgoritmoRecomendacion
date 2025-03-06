@@ -46,7 +46,19 @@ const images = [
     { src: 'https://astrodevjv.github.io/AlgoritmoRecomendacion/Images/fotoArte4.jpg', category: 'Arte', name: 'Arte' }
 ];
 document.addEventListener("DOMContentLoaded", () => {
-    let seleccionCount = 0; // Contador de selecciones
+    let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0; // Cargar el contador de selecciones
+
+    function getMostSelectedCategory() {
+        const storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
+        if (storedCategories.length === 0) return null;
+
+        const categoryCount = storedCategories.reduce((acc, category) => {
+            acc[category] = (acc[category] || 0) + 1;
+            return acc;
+        }, {});
+
+        return Object.keys(categoryCount).reduce((a, b) => (categoryCount[a] > categoryCount[b] ? a : b));
+    }
 
     function getUniqueCategoryCards() {
         const categoryMap = {};
@@ -71,8 +83,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayCards() {
         const cardContainer = document.getElementById('cardContainer');
-        const selectedCards = getUniqueCategoryCards();
+        let selectedCards = getUniqueCategoryCards();
         cardContainer.innerHTML = '';
+
+        if (seleccionCount === 9) { // Si es la décima ronda
+            const mostSelectedCategory = getMostSelectedCategory();
+            if (mostSelectedCategory) {
+                const categoryImages = images.filter(img => img.category === mostSelectedCategory);
+                if (categoryImages.length > 0) {
+                    const guaranteedImage = categoryImages[Math.floor(Math.random() * categoryImages.length)];
+                    selectedCards = selectedCards.slice(0, 3); // Reducir a 3 cartas
+                    selectedCards.push(guaranteedImage); // Añadir la imagen asegurada
+                }
+            }
+        }
 
         selectedCards.forEach(imageObj => {
             const card = document.createElement('div');
@@ -92,23 +116,18 @@ document.addEventListener("DOMContentLoaded", () => {
             cardContainer.appendChild(card);
 
             card.addEventListener('click', () => {
-                // Quitar selección previa
                 document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-                // Marcar nueva selección
                 card.classList.add('selected');
             });
         });
 
-        // Verificar si es la décima ronda y guardar imágenes con sus categorías
-        let seleccionCount = JSON.parse(localStorage.getItem("selectedCategories"))?.length || 0;
-        if (seleccionCount === 9) { // En la décima ronda
+        if (seleccionCount === 9) { // Guardar imágenes de la ronda 10
             const imagenesRonda10 = selectedCards.map(img => ({
                 categoria: img.category,
                 url: img.src
             }));
-
             localStorage.setItem("imagenesRonda10", JSON.stringify(imagenesRonda10));
-            console.log("📸 Imágenes de la ronda 10 guardadas con categoría:", imagenesRonda10);
+            console.log("📸 Imágenes de la ronda 10 guardadas:", imagenesRonda10);
         }
     }
 
@@ -118,9 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selectedCard) {
             let storedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
             storedCategories.push(selectedCard.dataset.category);
-            if (seleccionCount === 10) {
-                storedCategories.pop();
-            }
             localStorage.setItem("selectedCategories", JSON.stringify(storedCategories));
 
             seleccionCount++;
@@ -142,12 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const recomendacion = predecirGusto(storedCategories);
         console.log("🔥 Categoría recomendada:", recomendacion);
 
-
         localStorage.setItem("categoriaRecomendada", recomendacion);
-
-
         window.location.href = "prediccion.html";
-
 
         localStorage.removeItem("selectedCategories");
         seleccionCount = 0;
