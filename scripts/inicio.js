@@ -5,6 +5,6 @@ let button = document.getElementById("initialButton");
 
 button.addEventListener("click", function() {
     if (input.value === clave) {
-        
+
     }
 })
