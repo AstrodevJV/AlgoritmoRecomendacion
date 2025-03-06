@@ -27,7 +27,7 @@ function predecirGusto(elecciones) {
     return mejoresCategorias[0]; // Por si acaso
 }
 
-// pruba por si lo quiere ver en el navegador 
+// pruba por si lo quiere ver en el navegador
 const eleccionesUsuario = [
     "Música", "Fitness", "Música", "Arte", "Moda",
     "Música", "Bienestar", "Música", "Fitness", "Arte",
