@@ -64,6 +64,52 @@
     height: 30px;
 }
 
+@media (max-width: 300px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 330px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 800px) {
+    #logo {
+        background-color: rgb(255, 255, 255);
+        padding: 8px;
+        border-bottom-left-radius: 200px;
+        border-bottom-right-radius: 200px;
+        margin: 0px 128px;
+    }
+
+    #logoImage {
+        width: 30%;
+    }
+}
+
+@media (min-width: 1000px) {
+    #logo {
+        background-color: rgb(255, 255, 255);
+        padding: 8px;
+        border-bottom-left-radius: 300px;
+        border-bottom-right-radius: 300px;
+        margin: 0px 192px;
+    }
+
+    #logoImage {
+        width: 25%;
+    }
+}
+
 /*
 Padding
 1 valor: Todos los lados.
