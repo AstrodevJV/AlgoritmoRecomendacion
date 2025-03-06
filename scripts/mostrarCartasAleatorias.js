@@ -92,6 +92,7 @@ function displayCards() {
         cardContainer.appendChild(card);
 
         card.addEventListener('click', () => {
+            console.log("Categorías seleccionadas guardadas:", selectedCategories);
             const isSelected = card.dataset.selected === "true";
             card.dataset.selected = isSelected ? "false" : "true";
             card.classList.toggle('selected', !isSelected);
