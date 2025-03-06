@@ -9,12 +9,8 @@ body {
 
 /* Título */
 h1 {
-<<<<<<< HEAD
     color: #222;
     margin-top: 20px;
-=======
-    color: rgb(59, 59, 59);
->>>>>>> 28c9fe51a1a20f207f868138c814d5a4545e95de
 }
 
 /* Contenedor de cartas */
@@ -37,11 +33,13 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.3s;
     position: relative;
+    box-sizing: border-box; /* Asegura que el tamaño de la tarjeta no cambie por los bordes */
+    will-change: transform; /* Mejora la performance del efecto */
 }
 
 /* Efecto al pasar el mouse */
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05);  /* Escala la tarjeta sin afectar el layout */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -65,6 +63,7 @@ h1 {
     font-weight: bold;
     color: #444;
 }
+
 
 /* Botón de confirmación */
 #confirmSelection {
@@ -91,4 +90,19 @@ h1 {
     font-weight: bold;
     margin-top: 15px;
     color: #222;
+}
+
+
+@media (max-width: 400px) {
+    .card {
+        width: 144px;
+        height: 198px;
+    }
+}
+
+@media (max-width: 365px) {
+    .card {
+        width: 128px;
+        height: 176px;
+    }
 }
